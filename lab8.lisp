@@ -1,5 +1,5 @@
 (defun start ()
-  (main (int_list_input)))
+  (format t "Changed list: ~a" (main (int_list_input))))
 
 (defun main (List)
   (left_middle_right List (min_num_index List) (max_num_index List)))
@@ -15,6 +15,7 @@ To finish typing, enter any character other than a number and press Enter.~%")
       (_int_list_input (append List (list (parse-integer (read-line)))))
     ; Else return list
     (error ()
+      (format t "Your list: ~a~%" List)
       List)))
 
 (defun max_num_index (List)
