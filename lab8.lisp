@@ -1,5 +1,21 @@
+(defun start ()
+  (main (int_list_input)))
+
 (defun main (List)
   (left_middle_right List (min_num_index List) (max_num_index List)))
+
+(defun int_list_input ()
+  (format t "Input a number and press Enter to add to the list.
+To finish typing, enter any character other than a number and press Enter.~%")
+  (_int_list_input nil))
+
+(defun _int_list_input (List)
+  (handler-case
+      ; If integer number, insert to list 
+      (_int_list_input (append List (list (parse-integer (read-line)))))
+    ; Else return list
+    (error ()
+      List)))
 
 (defun max_num_index (List)
   (_max_num_index List 0 0))
@@ -7,7 +23,7 @@
 (defun _max_num_index (List Index Counter)
   (cond
     ((null List) -1) ; If list is empty
-    ((null (cdr List)) Index) ; Base condition: if tail is null, return head
+    ((null (cdr List)) Index) ; If tail is null, return head
     ; If head > next number skip number
     ((> (car List) (cadr List)) (_max_num_index (cons (car List) (cddr List)) Index (+ Counter 1)))
     (t (_max_num_index (cdr List) (+ Counter 1) (+ Counter 1))))) ; Else skip head
@@ -19,7 +35,7 @@
   (cond                                                                                            
     ((null List) -1) ; If list is empty                                                      
     ((null (cdr List)) Index) ; If tail is null return index, list checked                       
-    ; If head > next number skip number
+    ; If head < next number skip number
     ((< (car List) (cadr List)) (_min_num_index (cons (car List) (cddr List)) Index (+ Counter 1)))
     (t (_min_num_index (cdr List) (+ Counter 1) (+ Counter 1))))) ; Else skip head                 
 
@@ -27,7 +43,7 @@
   (cond
     ((> Index2 Index1)
      (plus_middle_right (get_part List (+ Index1 1)) (- Index2 (+ Index1 1))))
-    (t (rreverse (plus_middle_right (get_part List (+ Index2 1)) (- Index1 (+ Index2 1)))))))
+    (t (plus_middle_right (get_part List (+ Index2 1)) (- Index1 (+ Index2 1))))))
 
 (defun rreverse (List)
   (cond
@@ -51,6 +67,3 @@
 ; Middle part plus right, middle is reversed
 (defun plus_right (List)
   (append (cadr List) (car List)))
-
-; Example
-; (main (list 5 4 3 2 -1 6 7 8 9 10 0 1))
