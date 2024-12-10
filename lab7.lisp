@@ -1,5 +1,5 @@
 (defun main ()
-  (format t "Result is ~a~%" (func (read-int-var "a") (read-int-var "n") 0)))
+  (format t "Result is ~a~%" (func (read-int-var "a") (read-int-var "n") 0.0)))
 
 (defun func (a n res)
   (if (>= n 1)
